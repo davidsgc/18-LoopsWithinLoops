@@ -83,33 +83,69 @@ def draw_L(window, circle, r, c):
     # TODO: 2. Implement and test this function.
     #     The testing code is already written for you (above).
     # ------------------------------------------------------------------
-    og_x = circle.center.x
-    og_y = circle.center.y
-    d = circle.radius * 2
-    for k in range(r):
-        circle.center = rg.Point(og_x, og_y + (d * k))
-        for j in range(3):
-            x_center = og_x + (d * j)
-            new = rg.Circle(rg.Point(x_center, circle.center.y), circle.radius)
-            new.fill_color = circle.fill_color
-            new.attach_to(window)
-        window.render()
-    for k in range(3):
-        circle.center = rg.Point(og_x, og_y + (d * r))
-        for j in range(3):
-            x_center = circle.center.x + (d * (j))
-            new = rg.Circle(rg.Point(x_center, circle.center.y), circle.radius)
-            new.fill_color = circle.fill_color
-            new.attach_to(window)
-        window.render()
-    for k in range(c):
-        circle.center = rg.Point(og_x + (3 * d) + (d * k), og_y + (d * r))
-        for j in range(3):
-            y_center = circle.center.y + (d * j)
-            new = rg.Circle(rg.Point(circle.center.x, y_center), circle.radius)
-            new.fill_color = circle.fill_color
-            new.attach_to(window)
-        window.render()
+    original_x = circle.center.x
+    original_y = circle.center.y
+    radius = circle.radius
+
+    x = original_x
+    y = original_y
+
+    for j in range(r):
+        for k in range(3):
+            new_circle = rg.Circle(rg.Point(x, y), radius)
+            new_circle.fill_color = circle.fill_color
+            new_circle.attach_to(window)
+            window.render(0.1)
+
+            x = x + (2 * radius)
+
+        y = y + 2 * radius
+        x = original_x
+
+    for j in range(3):
+        for k in range(3):
+            new_circle = rg.Circle(rg.Point(x, y), radius)
+            new_circle.fill_color = circle.fill_color
+            new_circle.attach_to(window)
+            window.render(0.1)
+
+            x = x + (2 * radius)
+
+        y = y + 2 * radius
+        x = original_x
+
+    y = original_y + (2 * radius) * r
+    x = original_x + (2 * radius) * 3
+
+    for j in range(3):
+        for k in range(c):
+            new_circle = rg.Circle(rg.Point(x, y), radius)
+            new_circle.fill_color = circle.fill_color
+            new_circle.attach_to(window)
+            window.render(0.1)
+
+            x = x + (2 * radius)
+
+        y = y + 2 * radius
+        x = original_x + (2 * radius) * 3
+
+
+def run_test_draw_wall_on_right():
+    """ Tests the    draw_wall_on_right    function. """
+    # Tests 1 and 2 are ALREADY DONE (here).
+    window = rg.RoseWindow(550, 300, 'Wall on the right, Tests 1 and 2')
+
+    window.continue_on_mouse_click('Click to run Test 1.')
+
+    rectangle1 = rg.Rectangle(rg.Point(250, 30), rg.Point(250 + 30, 30 + 20))
+    draw_wall_on_right(rectangle1, 8, window)
+
+    window.continue_on_mouse_click('Click to run Test 2.')
+    rectangle2 = rg.Rectangle(rg.Point(470, 40), rg.Point(470 + 50, 40 + 50))
+    draw_wall_on_right(rectangle2, 4, window)
+
+    window.close_on_mouse_click()
+
 
 def run_test_draw_wall_on_right():
     """ Tests the    draw_wall_on_right    function. """
