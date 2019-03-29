@@ -85,12 +85,31 @@ def draw_L(window, circle, r, c):
     # ------------------------------------------------------------------
     og_x = circle.center.x
     og_y = circle.center.y
+    d = circle.radius * 2
     for k in range(r):
+        circle.center = rg.Point(og_x, og_y + (d * k))
         for j in range(3):
-            x_center = og_x + 2 * j * circle.radius
-            new = rg.Circle(rg.Point(x_center, og_y))
+            x_center = og_x + (d * j)
+            new = rg.Circle(rg.Point(x_center, circle.center.y), circle.radius)
+            new.fill_color = circle.fill_color
             new.attach_to(window)
-            window.render()
+        window.render()
+    for k in range(3):
+        circle.center = rg.Point(og_x, og_y + (d * r))
+        for j in range(3):
+            x_center = circle.center.x + (d * (j))
+            new = rg.Circle(rg.Point(x_center, circle.center.y), circle.radius)
+            new.fill_color = circle.fill_color
+            new.attach_to(window)
+        window.render()
+    for k in range(c):
+        circle.center = rg.Point(og_x + (3 * d) + (d * k), og_y + (d * r))
+        for j in range(3):
+            y_center = circle.center.y + (d * j)
+            new = rg.Circle(rg.Point(circle.center.x, y_center), circle.radius)
+            new.fill_color = circle.fill_color
+            new.attach_to(window)
+        window.render()
 
 def run_test_draw_wall_on_right():
     """ Tests the    draw_wall_on_right    function. """
